@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+
+<style type="text/css">
+	img
+	{
+		height: 25vh;
+		width: 10vw;
+	}
+	body{background-image: url(static/images/background.jpg); 
+	background-repeat:no-repeat;
+	background-size:cover;}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<body>
+<center><h1>Poker Game</h1></center>
+<br>
+<div style="position: absolute; width: 55vw;" id="cardshow">
+	{%for i in range(0, 5)%} 
+	<img src="static/images/{{ name[i] }}.png">
+    {%endfor%} 
+    <br><br>
+    <div id="cpu">
+    {%for i in range(5, 10)%} 
+	<img src="static/images/cover.png">
+    {%endfor%} 
+    </div>
+    <p id="demo"></p>
+    <button onclick="winshow()"> DEAL </button>
+    <button onclick="location.reload();"> Shuffel </button>
+	<input type="button" value="newgame" onclick="newgame()" name="">
+
+
+
+</div>
+<div style="width: 50vw;margin-left: 65vw;" id="main">
+	<img src="static/images/pok1.png" id="pok0" style="height: 50px; width: 50px;" onclick="chash(0,1)">
+	<img src="static/images/pok10.png" id="pok1" style="height: 50px; width: 50px;" onclick="chash(1,10)">
+	<img src="static/images/pok20.png" id="pok2" style="height: 50px; width: 50px;" onclick="chash(2,20)">
+	<img src="static/images/pok50.png" id="pok3" style="height: 50px; width: 50px;" onclick="chash(3,50)">
+	<img src="static/images/pok100.png" id="pok4" style="height: 50px; width: 50px;" onclick="chash(4,100)">
+	<br>
+	<div>
+		<b>Bet:<span id="bet"></span></b>
+	</div>
+	<div>
+		<b>Amount:<span id="amntis"></span></b>
+	</div>
+	<p>----------------------------------</p>
+	<div>
+		<b>Bet:<span id="cpubet"></span></b>
+	</div>
+	<div>
+		<b>Amount:<span id="cpuamt"></span></b>
+	</div>
+	<script type="text/javascript">
+	
+    
+    arr=[0,0,0,0,0];
+    ch=0;
+	
+  function chash(t,n)
+  {
+  	if(ch<=1810)
+  	{
+  	 ch=ch+n;
+  	 console.log(ch);
+  	 document.getElementById('bet').innerHTML=ch;
+  	 document.getElementById('cpubet').innerHTML=ch;
+  	}
+  	arr[t]=arr[t]+1;
+  	if(arr[t]>=10)
+  	{
+  		document.getElementById('pok'+t).style.display="none";
+    }
+  } 
+	function winshow()
+{
+	var winamt=0;
+	document.getElementById('cpu').innerHTML="{%for i in range(5, 10)%}<img src='static/images/{{ name[i] }}.png'> {%endfor%}";
+	var a={{ res1[1] }} ;
+	var b={{ res2[1] }} ;
+	console.log(a,b);
+	//min win
+	var num='';
+	if(a>b)
+	{
+	   num="<b>YOU win</b>";
+ 
+	}
+	else if(a<b)
+	{
+		num="<b>CPU win</b>";
+	}
+	else if(a==b)
+	{num="tie";}
+		
+	console.log(a,b);
+	console.log(num);
+    document.getElementById("demo").innerHTML = "<h3>YOU :{{res1[0]}}</h3><h3>CPU :{{ res2[0]}}</h3>"+num;
+  }
+</script>
+</div>
+
+<script type="text/javascript">
+	function newgame()
+	{
+		ar=[0,0,0,0,0];
+  	   location.reload();
+	}
+</script>
+</body>
+</html>
